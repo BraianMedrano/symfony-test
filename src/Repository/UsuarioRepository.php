@@ -21,6 +21,29 @@ class UsuarioRepository extends ServiceEntityRepository
         parent::__construct($registry, Usuario::class);
     }
 
+    // Tambien podemos crear un metodo en especifico para por ejemplo buscar un usuario por su nombre
+    public function findByName($name)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.nombre = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Otra forma mas para buscar un usuario por su nombre es utilizando un metodo que use una query de sql como la siguiente (video 14 de youtube)
+    public function findByNameSql($name)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery(
+            'SELECT u
+            FROM App\Entity\Usuario u
+            WHERE u.nombre = :name'
+        )->setParameter('name', $name);
+        return $query->getResult();
+    }
+
+
     //    /**
     //     * @return Usuario[] Returns an array of Usuario objects
     //     */

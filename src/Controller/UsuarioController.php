@@ -17,8 +17,30 @@ class UsuarioController extends AbstractController
     #[Route('/', name: 'app_usuario_index', methods: ['GET'])]
     public function index(UsuarioRepository $usuarioRepository): Response
     {
+        // Lo que hace la funcion dump es imprimir en pantalla el contenido de la variable en caso de que quieramos hacer un debug
+
+        // dump($usuarioRepository->findAll());
+
+        // Suponiendo que queremos filtrar los usuarios que tengan el nombre de "Juan" utilizamos la siguiente linea usando el findBy()
+        // $usuarios = $usuarioRepository->findBy(['nombre' => 'braian']);
+
+        // Podemos hacer que se ordene de manera ascendente o descendente pasandole un array en el 2do parametro del findBy() de la siguiente manera:
+        // $usuarios = $usuarioRepository->findBy([], ['id' => 'ASC']);
+        // $usuarios = $usuarioRepository->findBy([], ['id' => 'DESC']);
+
+        // Tambien se puede utilizar de la siguiente manera pasandole un array asociativo con el nombre del campo y el valor que queremos filtrar
+        // $usuarios = $usuarioRepository->findBy(array('nombre' => 'Juan');
+
+        // Otra manera es usar el metodo que nos permite hacer consultas mas complejas y que creamos en el archivo UsuarioRepository.php
+        // $usuarios = $usuarioRepository->findByName('Ramiro');
+
+        // Tambien lo mismo que arriba solo que con una query de sql tambien creada en el archivo UsuarioRepository.php (aca se lo puede aplicar sin necesidad de usar el entity manager y get repository como en el video 14 de youtube)
+        $usuarios = $usuarioRepository->findByNameSql('Ramiro');
+
+        // $usuarios = $usuarioRepository->findAll();
+
         return $this->render('usuario/index.html.twig', [
-            'usuarios' => $usuarioRepository->findAll(),
+            'usuarios' => $usuarios,
         ]);
     }
 
