@@ -3,42 +3,44 @@
 {% block title %}Lista de usuarios{% endblock %}
 
 {% block body %}
-    <h1>Lista de usuarios</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Lista de usuarios</h1>
 
-    {# Is defined en twig es similar al isset en php y lo que hace es verificar que la variable no sea nula #}
-    {% if usuarios is defined %}
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Edad</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for usuario in usuarios %}
-                <tr>
-                    <td>{{ usuario.id }}</td>
-                    <td>{{ usuario.nombre }}</td>
-                    <td>{{ usuario.apellido }}</td>
-                    <td>{{ usuario.edad }}</td>
-                    <td>
-                        <a href="{{ path('app_usuario_show', {'id': usuario.id}) }}">show</a>
-                        <a href="{{ path('app_usuario_edit', {'id': usuario.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <a href="{{ path('app_usuario_new') }}">Create new</a>
-        
-    {% endif %}
-
+                {% if usuarios is defined %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Edad</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usuario in usuarios %}
+                                <tr>
+                                    <td>{{ usuario.id }}</td>
+                                    <td>{{ usuario.nombre }}</td>
+                                    <td>{{ usuario.apellido }}</td>
+                                    <td>{{ usuario.edad }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{ path('app_usuario_show', {'id': usuario.id}) }}">show</a>
+                                        <a class="btn btn-secondary" href="{{ path('app_usuario_edit', {'id': usuario.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a class="btn btn-outline-primary" href="{{ path('app_usuario_new') }}">Create new</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
