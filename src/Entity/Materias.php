@@ -19,6 +19,9 @@ class Materias
     #[ORM\Column]
     private ?int $capacidad = null;
 
+    #[ORM\ManyToOne(inversedBy: 'materias')]
+    private ?Usuario $usuario = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Materias
     public function setCapacidad(int $capacidad): static
     {
         $this->capacidad = $capacidad;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): static
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }
