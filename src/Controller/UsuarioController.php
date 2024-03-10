@@ -10,12 +10,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Materias;
 
 #[Route('/usuario')]
 class UsuarioController extends AbstractController
 {
     #[Route('/', name: 'app_usuario_index', methods: ['GET'])]
-    public function index(UsuarioRepository $usuarioRepository): Response
+
+    // Si luego queremos usar otras entidades (repositories) en el controlador debemos pasarle el entityManager como parametro a la funcion index() y luego usarlo para obtener el repositorio de la entidad que queremos usar
+    public function index(UsuarioRepository $usuarioRepository, EntityManagerInterface $entityManager): Response
     {
         // Lo que hace la funcion dump es imprimir en pantalla el contenido de la variable en caso de que quieramos hacer un debug
 
@@ -35,9 +38,14 @@ class UsuarioController extends AbstractController
         // $usuarios = $usuarioRepository->findByName('Ramiro');
 
         // Tambien lo mismo que arriba solo que con una query de sql tambien creada en el archivo UsuarioRepository.php (aca se lo puede aplicar sin necesidad de usar el entity manager y get repository como en el video 14 de youtube)
-        $usuarios = $usuarioRepository->findByNameSql('Ramiro');
+        // $usuarios = $usuarioRepository->findByNameSql('Ramiro');
 
-        // $usuarios = $usuarioRepository->findAll();
+
+        // Ahora si queremos traer todas las materias que existen en la base de datos debemos usar en entityManager y el getRepository() de la siguiente manera
+        $materias = $entityManager->getRepository(Materias::class)->findAll();
+        dump($materias);
+
+        $usuarios = $usuarioRepository->findAll();
 
         return $this->render('usuario/index.html.twig', [
             'usuarios' => $usuarios,
