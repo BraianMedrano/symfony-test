@@ -1,0 +1,10 @@
+html{
+    /* change background color using the variable called  	--bs-body-bg  */
+    background-color: var( --bs-body-color);
+    color: white;
+}
+
+body{
+    background-color: inherit;
+    color: white;
+}
