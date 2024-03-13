@@ -3,28 +3,27 @@
 {# {{ form_widget(form) }} #}
 {# add a regular div like in html #}
 
-<div class="mb-3">
-    {# {{ form_label(form.nombre, 'Nombre') }}
-    {{ form_widget(form.nombre) }}
-    {{ form_errors(form.nombre) }} #}
+    <div class="mb-3">
+        {# {{ form_label(form.nombre, 'Nombre') }}
+        {{ form_widget(form.nombre) }}
+        {{ form_errors(form.nombre) }} #}
 
-    {{ form_row(form.nombre, {'label': 'Nombre', 'attr': {'class': 'form-label form-control'}}) }}
+        {{ form_row(form.nombre, {'label': 'Nombre', 'attr': {'class': 'form-label form-control'}}) }}
 
-</div>
+    </div>
 
-<div class="mb-3">
-    {{ form_row(form.apellido, {'label': 'Apellido', 'attr': {'class': 'form-label form-control'}}) }}
+    <div class="mb-3">
+        {{ form_row(form.apellido, {'label': 'Apellido', 'attr': {'class': 'form-label form-control'}}) }}
 
-</div>
+    </div>
 
-<div class="mb-3">
-    {{ form_row(form.edad, {'label': 'Edad', 'attr': {'class': 'form-label form-control'}}) }}
+    <div class="mb-3">
+        {{ form_row(form.edad, {'label': 'Edad', 'attr': {'class': 'form-label form-control'}}) }}
 
-</div>
+    </div>
 
 
-<button class="btn btn-secondary">{{ button_label|default('Save') }}</button>
-<a class="btn btn-primary" href="{{ path('app_usuario_index') }}">back to list</a>
-{{ include('usuario/_delete_form.html.twig') }}
+    <button class="btn btn-secondary">{{ button_label|default('Save') }}</button>
+    <a class="btn btn-primary" href="{{ path('app_usuario_index') }}">back to list</a>
 
 {{ form_end(form) }}
