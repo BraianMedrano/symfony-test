@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Materias;
 
+use function PHPUnit\Framework\isNull;
+
 #[Route('/usuario')]
 class UsuarioController extends AbstractController
 {
@@ -47,10 +49,19 @@ class UsuarioController extends AbstractController
         $usuarios = $usuarioRepository->findAll();
         
 
+        // Se agrega un condicional por si los usuarios no existen y se redirecciona para que se cree uno
+        if (is_Null($usuarios)) {
+
+            return $this->redirectToRoute('app_usuario_new');
+
+        }
         return $this->render('usuario/index.html.twig', [
             'usuarios' => $usuarios,
         
         ]);
+        
+
+
     }
 
     #[Route('/new', name: 'app_usuario_new', methods: ['GET', 'POST'])]
