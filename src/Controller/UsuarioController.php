@@ -43,12 +43,13 @@ class UsuarioController extends AbstractController
 
         // Ahora si queremos traer todas las materias que existen en la base de datos debemos usar en entityManager y el getRepository() de la siguiente manera
         $materias = $entityManager->getRepository(Materias::class)->findAll();
-        dump($materias);
-
+        
         $usuarios = $usuarioRepository->findAll();
+        
 
         return $this->render('usuario/index.html.twig', [
             'usuarios' => $usuarios,
+        
         ]);
     }
 
@@ -59,10 +60,27 @@ class UsuarioController extends AbstractController
         $form = $this->createForm(UsuarioType::class, $usuario);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($usuario);
-            $entityManager->flush();
+        
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            // Debido a que el request es un objeto, para obtener el valor del _token primero debemos acceder al campo usuario que es un array y luego al campo _token que tambien es otro array
+            $csrfToken = $request->request->all()['usuario']['_token'];
+
+            // dump($request->request->get('_token'));
+            
+            if ($this->isCsrfTokenValid('usuario_create', $csrfToken)) {
+                
+                
+                $entityManager->persist($usuario);
+                $entityManager->flush();
+                
+            } else {
+                echo "El token no es valido, recarga la pagina";
+            }
+            
+            
+            
             return $this->redirectToRoute('app_usuario_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -100,10 +118,16 @@ class UsuarioController extends AbstractController
 
     #[Route('/{id}', name: 'app_usuario_delete', methods: ['POST'])]
     public function delete(Request $request, Usuario $usuario, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        dump($request);
+        
+        
+        // Aca se le cambia el nombre del token (anteriormente delete) por usuario_item que modificamos en el archivo UsuarioType.php (el fomulario de usuario)
         if ($this->isCsrfTokenValid('delete'.$usuario->getId(), $request->request->get('_token'))) {
             $entityManager->remove($usuario);
             $entityManager->flush();
+        }else{
+            echo "El token no es valido, recarga la pagina";
         }
 
         return $this->redirectToRoute('app_usuario_index', [], Response::HTTP_SEE_OTHER);

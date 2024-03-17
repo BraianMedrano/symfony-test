@@ -43,6 +43,13 @@ class UsuarioType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Usuario::class,
+            'csrf_protection' => true,
+
+            // En el csrf_field_name se le puede cambiar el nombre que va a tener el type token en el formulario (y en html tambien)
+            'csrf_field_name' => '_token',
+            
+            // En el id de abajo es el primer campo que va a tener el csrfIsTokenValid() en el UsuarioController para identificar el token para ese formulario en especifico
+            'csrf_token_id'   => 'usuario_create',
         ]);
     }
 }
