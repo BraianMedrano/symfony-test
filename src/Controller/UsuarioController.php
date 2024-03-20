@@ -83,12 +83,21 @@ class UsuarioController extends AbstractController
             
             if ($this->isCsrfTokenValid('usuario_create', $csrfToken)) {
                 
-                
                 $entityManager->persist($usuario);
                 $entityManager->flush();
+
+                $this->addFlash(
+                    'notice',
+                    'Tus cambios se guardaron!'
+                );
                 
             } else {
-                echo "El token no es valido, recarga la pagina";
+                
+                $this->addFlash(
+                    'alert',
+                    'Hubo un error!, el token no es valido!'
+                );
+
             }
             
             
@@ -118,6 +127,11 @@ class UsuarioController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            
+            $this->addFlash(
+                'notice',
+                'Tus cambios se guardaron!'
+            );
 
             return $this->redirectToRoute('app_usuario_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -131,7 +145,7 @@ class UsuarioController extends AbstractController
     #[Route('/{id}', name: 'app_usuario_delete', methods: ['POST'])]
     public function delete(Request $request, Usuario $usuario, EntityManagerInterface $entityManager): Response
     {   
-        dump($request);
+        
         
         
         // Aca se le cambia el nombre del token (anteriormente delete) por usuario_item que modificamos en el archivo UsuarioType.php (el fomulario de usuario)
