@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row justify-content-center">
 
-            <h1>Register</h1>
+            <h1>Registrar User</h1>
             
             {{ form_start(registrationForm, {'attr': {'data-bs-theme': 'dark'}}) }}
 
@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="mb-3">
-                {{ form_row(registrationForm.email, {'label': 'email', 'attr': {'class': 'form-label form-control'}}) }}
+                {{ form_row(registrationForm.email, {'label': 'Email', 'attr': {'class': 'form-label form-control'}}) }}
 
                 </div>
 
@@ -31,7 +31,7 @@
 
                 {{ form_row(registrationForm.plainPassword, 
                 {
-                    'label': 'Password',
+                    'label': 'Contraseña',
                     'attr': {'class': 'form-label form-control'}
 
                 }) }}
@@ -42,15 +42,13 @@
                 <div class="mb-3" >
 
                 {{ form_row(registrationForm.agreeTerms, 
-                {
+                {   
+                    'label': 'Acepto los terminos',
                     'row_attr': {'class': 'form-check'},
                     'label_attr': {'class': 'form-check-label'},
                     'attr':{'class':'form-check-input'}
                 }) }}
 
-                {# {{ form_row(registrationForm.agreeTerms, {
-                'label_attr': {'class': 'form-check-label'},
-                'attr': {'class': 'form-check-input'}}) }} #}
                 
                 </div>
 
